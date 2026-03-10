@@ -1,0 +1,137 @@
+        /* Add this to your existing <style> section */
+        .legal-footer {
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+            padding-top: 30px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--muted);
+        }
+
+        .legal-footer a {
+            color: var(--muted);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .legal-footer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        :root {
+            --bg: #050505;
+            --text: #d4d4d4;
+            --muted: #737373;
+            --accent: #3b82f6;
+            --border: #262626;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+        }
+
+        .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        /* The "Part" Headers */
+        .part-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-top: 60px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            color: var(--muted);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .caps-lock {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            line-height: 1.8;
+            color: #a3a3a3;
+            border-left: 2px solid #333;
+            padding-left: 15px;
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .back-nav {
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .back-nav a {
+            color: var(--muted);
+        }
+
+        .back-nav a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .legal-footer {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
