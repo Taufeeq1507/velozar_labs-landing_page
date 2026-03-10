@@ -76,9 +76,7 @@
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border);
             display: block;
-            /* <--- CHANGED THIS to force a new line */
             width: 100%;
-            /* <--- ADDED THIS to span full width */
             padding-bottom: 5px;
         }
 
@@ -194,7 +192,7 @@
     <div class="part-header">Part II: Product-Specific Addendums</div>
 
     <div class="highlight-box">
-        <h2 style="margin-top: 0;">Product: NIS2 Compliance Monitor</h2>
+        <h2 style="margin-top: 0;">Product: NIS2 Compliance Monitor for Jira</h2>
         <p style="font-size: 0.9rem; margin-bottom: 20px; color: #fff;">Platform: Atlassian Forge (Jira Cloud)</p>
 
         <p><strong>1. No-Egress Architecture</strong><br>
@@ -209,6 +207,12 @@
         <p><strong>3. Configuration Storage</strong><br>
             App settings (e.g., reporting deadlines, jurisdiction preferences) are stored using the encrypted Atlassian
             Forge Storage API.</p>
+
+        <p><strong>4. Data Subject Rights (GDPR)</strong><br>
+            Since this application stores app-specific configuration data linked to Atlassian Account IDs, we honor all
+            Right to Erasure (Right to be Forgotten) requests. If a user is deleted from Jira, our app automatically
+            prunes associated metadata within 30 days. Manual deletion requests can be sent to support@velozarlabs.com.
+        </p>
     </div>
     <h2>Contact & DPO</h2>
     <p>For privacy inquiries, Data Processing Agreements (DPA), or security reporting, please contact:</p>
