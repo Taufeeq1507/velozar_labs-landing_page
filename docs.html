@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | NIS2 Compliance Monitor</title>
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://velozarlabs.com/docs">
+    <meta property="og:title" content="Documentation | NIS2 Compliance Monitor">
+    <meta property="og:description"
+        content="Official documentation and Jira Administrator guide for the NIS2 Compliance Monitor by Velozar Labs.">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://velozarlabs.com/docs">
+    <meta property="twitter:title" content="Documentation | NIS2 Compliance Monitor">
+    <meta property="twitter:description"
+        content="Official documentation and Jira Administrator guide for the NIS2 Compliance Monitor by Velozar Labs.">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/legal.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+
+<body>
+
+    <nav class="back-nav">
+        <a href="/">&lt; Return to Velozar Labs</a>
+    </nav>
+
+    <h1>NIS2 Compliance Monitor</h1>
+    <div class="meta">OFFICIAL DOCUMENTATION &middot; V1.0 &middot; FOR JIRA CLOUD</div>
+
+    <p>Welcome to the <strong>NIS2 Compliance Monitor for Jira</strong>. This enterprise-grade Governance, Risk, and
+        Compliance (GRC) tool automatically detects potential cyber incidents in your Jira workflows, enforces strict
+        internal reporting SLAs, and generates immutable audit logs to help your organization comply with Directive (EU)
+        2022/2555 (NIS2 Article 23).</p>
+
+    <h2>1. Getting Started (For Jira Admins)</h2>
+    <p>To prevent alert fatigue and restrict scanning to relevant teams, Jira Administrators must configure the
+        application scope before use.</p>
+
+    <h3>Accessing Global Settings</h3>
+    <ul>
+        <li>In the top Jira navigation bar, click <strong>Apps</strong> > <strong>NIS2 Compliance</strong>.</li>
+        <li>Select the <strong>Configuration</strong> tab.</li>
+    </ul>
+
+    <h3>Recommended Configuration</h3>
+    <ul>
+        <li><strong>Trigger Keywords:</strong> Enter comma-separated terms that indicate a security incident (e.g.,
+            <code>breach, ransomware, data leak, unauthorized access</code>).
+        </li>
+        <li><strong>SLA Deadline:</strong> Define your internal reporting countdown (Default: <code>24</code> hours).
+        </li>
+        <li><strong>Monitored Projects:</strong> Restrict the app to specific departments by entering Project Keys
+            (e.g., <code>SEC, IT, LEGAL</code>). Leave blank to monitor all projects.</li>
+        <li><strong>Monitored Issue Types:</strong> Restrict scanning to specific workflows (e.g.,
+            <code>Incident, Security</code>).
+        </li>
+    </ul>
+
+    <h2>2. Automated Detection & Alerting</h2>
+    <p>The app operates silently in the background, scanning the Summary and Description fields of new and updated
+        issues within your configured scope.</p>
+
+    <div class="highlight-box">
+        <h3 style="margin-top:0;">The Anti-Alert Fatigue Failsafe</h3>
+        <p>We know developer workflows can be noisy. The app uses contextual intelligence to categorize alerts based on
+            Jira Priority:</p>
+        <ul>
+            <li><span class="badge danger">Breach Detected</span> <strong>High / Highest Priority + Keyword:</strong>
+                Instantly triggers a critical SLA countdown and posts a warning comment in the Jira thread.</li>
+            <li><span class="badge review">Review Required</span> <strong>Low Priority + Keyword:</strong> Silently
+                flags the issue for review on the CISO Dashboard without spamming the issue thread with comments.</li>
+        </ul>
+    </div>
+
+    <h2>3. Triaging & Submitting Reports</h2>
+    <p>When an issue triggers a breach alert, Security and Compliance teams use the native Jira Issue Panel to manage
+        the response.</p>
+
+    <h3>Using the Issue Panel</h3>
+    <ol>
+        <li>Open the flagged Jira issue. On the right-hand sidebar, locate the <strong>NIS2 Compliance</strong> panel.
+        </li>
+        <li>Observe the real-time SLA countdown timer.</li>
+        <li>Click <strong>Prepare Compliance Payload</strong> to open the assessment form.</li>
+        <li>Fill in the incident details (Jurisdiction, Entity Name, Cross-Border Impact).</li>
+        <li>Click <strong>Auto-Attach & Close</strong>.</li>
+    </ol>
+
+    <p><strong>What happens next?</strong> The app generates an official PDF compliance report, attaches it securely to
+        the Jira issue, stops the SLA timer, and posts an immutable Audit Log comment recording the user who authorized
+        the submission.</p>
+
+    <h2>4. The CISO War-Room Dashboard</h2>
+    <p>The centralized Dashboard provides a top-down view of all compliance activities across your organization.</p>
+    <ul>
+        <li><span class="badge danger">Overdue</span> The 24-hour internal SLA has expired. Immediate escalation
+            required.</li>
+        <li><span class="badge warning">Pending</span> Active breach. The countdown timer is currently running.</li>
+        <li><span class="badge review">Review</span> Low-priority failsafe triggered. Requires a manual check to dismiss
+            or escalate.</li>
+        <li><span class="badge success">Compliant</span> The incident was successfully processed and the PDF report is
+            attached.</li>
+    </ul>
+
+    <h2>5. Frequently Asked Questions (FAQ)</h2>
+
+    <h3>Does Velozar Labs have access to our Jira data?</h3>
+    <p><strong>Absolutely not.</strong> This app is built on the secure Atlassian Forge architecture. It has a strict
+        <em>Zero-Egress</em> policy. Your Jira data is never transmitted to, processed by, or stored on Velozar Labs
+        servers. All background processing happens natively inside your Atlassian Cloud environment.
+    </p>
+
+    <h3>Why didn't an issue trigger an alert?</h3>
+    <p>If an issue contains a keyword but didn't trigger an alert, verify that the issue's <strong>Project Key</strong>
+        and <strong>Issue Type</strong> are included in the <em>Monitored Projects/Types</em> list in your Global
+        Configuration.</p>
+
+    <h3>Can we export the Dashboard data?</h3>
+    <p>Because the app applies native Jira Labels (e.g., <code>nis2-breach</code>, <code>nis2-compliant</code>), you can
+        easily export this data using standard Jira JQL searches:
+        <br><code>labels in (nis2-breach, nis2-review-required) ORDER BY created DESC</code>.
+    </p>
+
+    <footer class="legal-footer">
+        <a href="/">Home</a>
+        <a href="/docs">Docs</a>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <span>&copy; 2026 Velozar Labs</span>
+    </footer>
+</body>
+
+</html>
