@@ -1,1 +1,51 @@
-const cube = document.querySelector('.cube-3d'); const baseSpeed = 0.2; const friction = 0.05; const tiltSensitivity = 15; let currentRotationY = 0; let currentSpeed = baseSpeed; let targetTiltX = 0; let targetTiltY = 0; let currentTiltX = 0; let currentTiltY = 0; let windowHalfX = window.innerWidth / 2; let windowHalfY = window.innerHeight / 2; document.addEventListener('mousemove', (event) => { const xPos = (event.clientX - windowHalfX) / windowHalfX; const yPos = (event.clientY - windowHalfY) / windowHalfY; targetTiltY = xPos * tiltSensitivity; targetTiltX = -yPos * tiltSensitivity; currentSpeed = Math.min(currentSpeed + 0.5, 3.0); }); let isVisible = true; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { isVisible = entry.isIntersecting; if (isVisible) animate(); }); }); const sceneContainer = document.querySelector('.scene-container'); if (sceneContainer) observer.observe(sceneContainer); const animate = () => { if (!isVisible) return; if (cube) { currentSpeed += (baseSpeed - currentSpeed) * friction; currentRotationY += currentSpeed; currentTiltX += (targetTiltX - currentTiltX) * 0.05; currentTiltY += (targetTiltY - currentTiltY) * 0.05; cube.style.transform = ` rotateX(${currentTiltX}deg) rotateY(${currentRotationY + currentTiltY}deg) `; } }; animate(); window.addEventListener('resize', () => { windowHalfX = window.innerWidth / 2; windowHalfY = window.innerHeight / 2; });
+const cube = document.querySelector('.cube-3d');
+const baseSpeed = 0.2;
+const friction = 0.05;
+const tiltSensitivity = 15;
+let currentRotationY = 0;
+let currentSpeed = baseSpeed;
+let targetTiltX = 0;
+let targetTiltY = 0;
+let currentTiltX = 0;
+let currentTiltY = 0;
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+
+document.addEventListener('mousemove', (event) => {
+    const xPos = (event.clientX - windowHalfX) / windowHalfX;
+    const yPos = (event.clientY - windowHalfY) / windowHalfY;
+    targetTiltY = xPos * tiltSensitivity;
+    targetTiltX = -yPos * tiltSensitivity;
+    currentSpeed = Math.min(currentSpeed + 0.5, 3.0);
+});
+
+let isVisible = true;
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) animate();
+    });
+});
+
+const sceneContainer = document.querySelector('.scene-container');
+if (sceneContainer) observer.observe(sceneContainer);
+
+const animate = () => {
+    if (!isVisible) return;
+
+    if (cube) {
+        currentSpeed += (baseSpeed - currentSpeed) * friction;
+        currentRotationY += currentSpeed;
+        currentTiltX += (targetTiltX - currentTiltX) * 0.05;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.05;
+        cube.style.transform = `rotateX(${currentTiltX}deg) rotateY(${currentRotationY + currentTiltY}deg)`;
+    }
+
+    requestAnimationFrame(animate);
+};
+animate();
+
+window.addEventListener('resize', () => {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+});
