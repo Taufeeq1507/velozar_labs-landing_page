@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full User Guide | NIS2 Compliance Monitor for Jira</title>
+    <meta name="description"
+        content="Complete reference guide for the NIS2 Compliance Monitor — privilege levels, all configuration fields, detection logic, three-stage workflow, and update behaviour.">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://velozarlabs.com/user-guide">
+    <meta property="og:title" content="Full User Guide | NIS2 Compliance Monitor for Jira">
+    <meta property="og:description"
+        content="Complete reference guide for the NIS2 Compliance Monitor — privilege levels, all configuration fields, detection logic, and the full three-stage Article 23 workflow.">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://velozarlabs.com/user-guide">
+    <meta property="twitter:title" content="Full User Guide | NIS2 Compliance Monitor for Jira">
+    <meta property="twitter:description"
+        content="Complete reference guide for the NIS2 Compliance Monitor — privilege levels, all configuration fields, detection logic, and the full three-stage Article 23 workflow.">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap">
+    </noscript>
+    <link rel="stylesheet" href="/base.css">
+    <link rel="stylesheet" href="/legal.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin: 20px 0 30px 0; font-size: 0.9rem; }
+        th { text-align: left; padding: 10px 14px; background: rgba(255,255,255,0.05); color: #fff;
+             border-bottom: 1px solid #262626; font-weight: 600; }
+        td { padding: 10px 14px; border-bottom: 1px solid #1a1a1a; color: #737373; vertical-align: top; }
+        td:first-child { color: #d4d4d4; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; white-space: nowrap; }
+        tr:last-child td { border-bottom: none; }
+        .toc { background: rgba(255,255,255,0.03); border: 1px solid #262626; border-radius: 8px;
+               padding: 24px 28px; margin: 30px 0 50px 0; }
+        .toc p { margin: 0 0 12px 0; color: #fff; font-weight: 600; font-size: 0.9rem; }
+        .toc ol { margin: 0; padding-left: 20px; }
+        .toc li { margin-bottom: 6px; }
+        .toc a { color: #3b82f6; font-size: 0.9rem; }
+        .toc a:hover { text-decoration: underline; }
+    </style>
+</head>
+
+<body>
+
+    <nav class="back-nav">
+        <a href="/docs">&lt; Back to Quick Start</a>
+    </nav>
+
+    <h1>NIS2 Compliance Monitor — Full User Guide</h1>
+    <div class="meta">COMPLETE REFERENCE &middot; FOR JIRA CLOUD &middot; ATLASSIAN FORGE</div>
+
+    <p>This guide covers everything needed to operate the app day-to-day: privilege levels, every configuration field,
+        the detection pipeline, the three-stage Article 23 workflow, the War Room dashboard, and how to manage update
+        delays. For initial installation, see the <a href="/docs">Quick Start Guide</a>.</p>
+
+    <div class="toc">
+        <p>Contents</p>
+        <ol>
+            <li><a href="#overview">What the App Does</a></li>
+            <li><a href="#privileges">Privilege Levels — Who Can Do What</a></li>
+            <li><a href="#configuration">Global Configuration — Every Field Explained</a></li>
+            <li><a href="#detection">How Detection Works</a></li>
+            <li><a href="#panel">The Compliance Panel (Issue Sidebar)</a></li>
+            <li><a href="#stages">The Three-Stage Article 23 Workflow</a></li>
+            <li><a href="#dashboard">The War Room Dashboard</a></li>
+            <li><a href="#delays">Update Delays and How to Force Refresh</a></li>
+            <li><a href="#labels">Jira Labels Written by the App</a></li>
+            <li><a href="#faq">Common Questions</a></li>
+        </ol>
+    </div>
+
+    <!-- ─── 1. OVERVIEW ─────────────────────────────────────────────────────── -->
+    <div class="part-header" id="overview">1. What the App Does</div>
+
+    <p>The NIS2 Compliance Monitor automates your obligations under <strong>Directive (EU) 2022/2555, Article 23</strong>.
+        When a cyber incident is detected in Jira it starts a three-stage legal reporting clock and guides your
+        compliance team through each mandatory submission deadline.</p>
+
+    <p>Three legal deadlines from the <strong>Moment of Awareness</strong> (when the breach is confirmed):</p>
+    <ul>
+        <li><strong>Stage 1 — Early Warning:</strong> within <strong>24 hours</strong></li>
+        <li><strong>Stage 2 — Full Notification:</strong> within <strong>72 hours</strong></li>
+        <li><strong>Stage 3 — Final Report:</strong> within <strong>30 days</strong></li>
+    </ul>
+
+    <p>These deadlines are mandated by EU law and are fixed — they cannot be configured.</p>
+
+    <!-- ─── 2. PRIVILEGES ────────────────────────────────────────────────────── -->
+    <div class="part-header" id="privileges">2. Privilege Levels — Who Can Do What</div>
+
+    <p>There are two access levels in the app. Every action is checked on the server on every call — there is no
+        session-based trust.</p>
+
+    <h2>NIS2 Officer</h2>
+    <p>A user qualifies as an officer if they meet <strong>either</strong> condition:</p>
+    <ul>
+        <li>They hold the <strong>Global Jira Administrator</strong> permission, <em>or</em></li>
+        <li>They are a member of the <strong>Jira group</strong> configured in the Officer Group field.</li>
+    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>NIS2 Officer</th>
+                <th>Everyone else</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>View compliance panel on any issue</td>
+                <td>✅</td>
+                <td>✅ (read-only)</td>
+            </tr>
+            <tr>
+                <td>See breach status and countdown timer</td>
+                <td>✅</td>
+                <td>✅</td>
+            </tr>
+            <tr>
+                <td>Manually escalate an issue to breach</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Fill in and save a draft report</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Submit a stage (PDF + advance stage)</td>
+                <td>✅ + must have Edit Issue on that specific issue</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Dismiss a review alert</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>View the War Room dashboard</td>
+                <td>✅</td>
+                <td>✅ (view only)</td>
+            </tr>
+            <tr>
+                <td>Mark a stage complete from the dashboard</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Open and save global configuration</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Note on stage completion:</strong> Stage submissions have a second permission
+            check on top of officer status — the officer must also have <strong>Edit Issue</strong> permission on that
+            specific Jira issue. This prevents an officer from advancing stages on issues in restricted projects they
+            have no legitimate access to.</p>
+    </div>
+
+    <h3>Auth Cache</h3>
+    <p>Permission results are cached per user for <strong>5 minutes</strong>. If you add someone to the Officer Group,
+        they may need to wait up to 5 minutes before the app recognises the change. Clicking the <strong>🔄 refresh
+            button</strong> inside the compliance panel bypasses the cache immediately.</p>
+
+    <!-- ─── 3. CONFIGURATION ─────────────────────────────────────────────────── -->
+    <div class="part-header" id="configuration">3. Global Configuration — Every Field Explained</div>
+
+    <p>Go to <strong>Jira Settings → Apps → NIS2 Compliance Center</strong> to open the admin panel.</p>
+
+    <h2>Organisation Identity</h2>
+    <p>These fields pre-fill the PDF report forms so officers don't retype them every time. They do not affect detection
+        logic.</p>
+
+    <table>
+        <thead>
+            <tr><th>Field</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Organisation Name</td>
+                <td>Your company's legal name. Appears on all PDF compliance reports.</td>
+            </tr>
+            <tr>
+                <td>Organisation Sector</td>
+                <td>Your NIS2 classification (Energy, Health, Banking, etc.). Appears on reports.</td>
+            </tr>
+            <tr>
+                <td>Jurisdiction</td>
+                <td>Your EU member state regulator (e.g. Ireland NCSC, Germany BSI). Appears on reports.</td>
+            </tr>
+            <tr>
+                <td>Compliance Contact Name</td>
+                <td>The person regulators should contact. Pre-fills the report form.</td>
+            </tr>
+            <tr>
+                <td>Compliance Contact Email</td>
+                <td>Contact email for the same person.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Detection Configuration</h2>
+
+    <table>
+        <thead>
+            <tr><th>Field</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Keywords</td>
+                <td>Comma-separated terms scanned in issue summaries and descriptions. Only user-written text is
+                    scanned — structural metadata is ignored. Example:
+                    <code>ransomware, data breach, leak, intrusion, exfiltration</code></td>
+            </tr>
+            <tr>
+                <td>Monitored Projects</td>
+                <td>Comma-separated Jira project keys (e.g. <code>SEC, IT, OPS</code>). Leave blank to monitor every
+                    project. Case-insensitive.</td>
+            </tr>
+            <tr>
+                <td>Monitored Issue Types</td>
+                <td>Comma-separated issue types (default: <code>Security, Incident</code>). Leave blank to match all
+                    types.</td>
+            </tr>
+            <tr>
+                <td>Trigger Priorities</td>
+                <td>A keyword match only triggers breach-level action if the issue priority is also on this list
+                    (default: <code>High, Highest, Critical, P1</code>). Prevents routine keyword mentions in
+                    low-priority tickets from triggering alerts.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Escalation Behaviour</h2>
+
+    <table>
+        <thead>
+            <tr><th>Field</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Auto-Escalate</td>
+                <td>
+                    <strong>Off (default):</strong> Keyword + priority matches post a review comment and require an
+                    officer to manually confirm the breach.<br><br>
+                    <strong>On:</strong> Keyword + priority matches are immediately treated as confirmed breaches — the
+                    SLA clock starts automatically. Use only in environments where false positives are rare.
+                </td>
+            </tr>
+            <tr>
+                <td>Low Priority Failsafe</td>
+                <td><strong>On (default):</strong> If an issue has a matching keyword but its priority is not in the
+                    Trigger Priorities list, the app still posts a review comment and adds
+                    <code>nis2-review-required</code> as a safety net. Catches genuine incidents that were initially
+                    logged with the wrong priority. Turn off if you receive too many false-positive review alerts.</td>
+            </tr>
+            <tr>
+                <td>Notification Target</td>
+                <td>The raw Atlassian Account ID of the person @mentioned in review-required comments. This is not an
+                    email — it is the alphanumeric ID (e.g. <code>5b10ac2d...</code> or a UUID). Find it in Jira user
+                    management. Leave blank to post the comment without a mention.</td>
+            </tr>
+            <tr>
+                <td>Officer Group</td>
+                <td>The exact name of a Jira group whose members get NIS2 Officer privileges without needing full Jira
+                    Admin. The group must already exist in Jira. Case-sensitive.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ─── 4. DETECTION ─────────────────────────────────────────────────────── -->
+    <div class="part-header" id="detection">4. How Detection Works</div>
+
+    <p>The app runs a background function on every Jira issue create and update event. No manual action is required.</p>
+
+    <h2>Detection Pipeline</h2>
+    <ol>
+        <li><strong>Deduplication:</strong> The app uses the Jira <code>updated</code> timestamp to skip duplicate
+            webhook deliveries for the same event.</li>
+        <li><strong>Auto-complete check:</strong> If the issue is closed (<code>statusCategory = done</code>) and all
+            three NIS2 stages are complete, the app stamps <code>nis2-compliant</code> automatically.</li>
+        <li><strong>Scope gate:</strong> The issue must match your configured Monitored Projects and Monitored Issue
+            Types. Already-confirmed breaches bypass the scope gate — removing an issue from monitored scope does not
+            remove the legal obligation.</li>
+        <li><strong>Keyword scan:</strong> The summary and description are scanned for configured keywords. Only
+            user-written text is scanned — ADF structural keys are excluded to prevent false matches.</li>
+        <li><strong>Priority check:</strong> A keyword match triggers breach-level action only if the priority is in
+            your Trigger Priorities list.</li>
+        <li><strong>Action:</strong> Depending on the Auto-Escalate setting and Low Priority Failsafe, the app posts a
+            breach alert, a review comment, or nothing.</li>
+    </ol>
+
+    <h2>Hourly Retry Job</h2>
+    <p>If the initial breach notification fails (e.g. a temporary Jira outage), a scheduled background job runs
+        <strong>every hour</strong> and retries any issue that has the <code>nis2-breach</code> label but not
+        <code>nis2-notified</code>. This ensures no breach goes unnotified even during platform disruption.</p>
+
+    <!-- ─── 5. COMPLIANCE PANEL ──────────────────────────────────────────────── -->
+    <div class="part-header" id="panel">5. The Compliance Panel (Issue Sidebar)</div>
+
+    <p>Open any Jira issue. The NIS2 panel appears in the right sidebar. What you see depends on the issue's state:</p>
+
+    <table>
+        <thead>
+            <tr><th>Panel State</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>✅ NIS2 Monitoring Active</td>
+                <td>Issue is in scope but no breach or keyword match detected.</td>
+            </tr>
+            <tr>
+                <td>✅ OUT OF COMPLIANCE SCOPE</td>
+                <td>Issue is outside your configured projects or issue types.</td>
+            </tr>
+            <tr>
+                <td>⚠️ REVIEW REQUIRED</td>
+                <td>Keyword match detected. An officer must confirm or dismiss.</td>
+            </tr>
+            <tr>
+                <td>🔴 BREACH DETECTED</td>
+                <td>Confirmed breach — three-stage countdown is running.</td>
+            </tr>
+            <tr>
+                <td>✅ FULLY COMPLIANT</td>
+                <td>All three Article 23 stages submitted and filed.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>REVIEW REQUIRED State</h2>
+    <p>Two buttons appear:</p>
+    <ul>
+        <li><strong>Escalate to Breach</strong> — Confirms the incident and starts the SLA clock from this moment.</li>
+        <li><strong>Dismiss</strong> — Marks the issue as <code>nis2-dismissed</code> and removes the review alert.
+            Use for false positives.</li>
+    </ul>
+
+    <h2>BREACH DETECTED State</h2>
+    <p>A live countdown timer shows how long remains until the current stage deadline. The panel enters form mode.</p>
+
+    <h3>Draft Saving</h3>
+    <p>Click <strong>Save Draft</strong> to save progress. Drafts are per-issue per-stage. If you are on Stage 2 and
+        have no Stage 2 draft, the Stage 1 draft cascades in as a starting point so you don't retype shared fields.</p>
+
+    <h3>Submitting a Stage</h3>
+    <p>Click <strong>Submit &amp; Attach to Jira</strong>. This:</p>
+    <ol>
+        <li>Generates the PDF directly in the browser (no server upload).</li>
+        <li>Attaches it to the Jira issue directly — browser to Jira, bypassing Forge payload limits.</li>
+        <li>Advances the compliance stage by adding <code>nis2-stage{N}-complete</code>.</li>
+        <li>Posts an immutable audit comment recording the submitting user and timestamp.</li>
+        <li>On Stage 3: also stamps <code>nis2-compliant</code> and the issue is fully resolved.</li>
+    </ol>
+    <p>You can also <strong>Download PDF</strong> without submitting — useful for previewing before filing.</p>
+
+    <!-- ─── 6. THREE STAGES ──────────────────────────────────────────────────── -->
+    <div class="part-header" id="stages">6. The Three-Stage Article 23 Workflow</div>
+
+    <h2>Stage 1 — Early Warning (24 hours)</h2>
+    <p>Mandatory fields: jurisdiction, organisation name, suspected malicious action, potential cross-border impact,
+        impact details, incident type, detection date, compliance contact.</p>
+
+    <h2>Stage 2 — Full Notification (72 hours)</h2>
+    <p>Inherits all Stage 1 fields. Additional mandatory fields: incident severity, indicators of compromise (IoCs),
+        mitigation steps taken, affected services and systems.</p>
+
+    <h2>Stage 3 — Final Report (30 days)</h2>
+    <p>Inherits all Stage 1 and 2 fields. Additional mandatory fields: root cause analysis, lessons learned.</p>
+
+    <div class="highlight-box">
+        <p style="margin: 0;"><strong>Stage ordering is enforced.</strong> Stage 2 cannot be submitted until Stage 1 is
+            complete. Stage 3 cannot be submitted until Stages 1 and 2 are both complete. Each stage generates a
+            separately labelled PDF attached to the Jira issue.</p>
+    </div>
+
+    <h2>The Moment of Awareness Timer</h2>
+    <p>The SLA clock starts from when the breach is first confirmed — either by the background handler on detection, or
+        by an officer clicking Escalate to Breach. The original timestamp is stored and never overwritten. If the app
+        retries a failed notification, the original detection time is preserved as the Moment of Awareness wherever
+        possible.</p>
+
+    <!-- ─── 7. DASHBOARD ─────────────────────────────────────────────────────── -->
+    <div class="part-header" id="dashboard">7. The War Room Dashboard</div>
+
+    <p>Go to <strong>Jira Settings → Apps → NIS2 Compliance Center</strong>. The dashboard shows all active breach
+        issues across all projects, sorted by urgency:</p>
+
+    <table>
+        <thead>
+            <tr><th>Status</th><th>Sort order</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge review">REVIEW</span></td>
+                <td>1st</td>
+                <td>Keyword match detected — awaiting officer triage. Not yet a confirmed breach.</td>
+            </tr>
+            <tr>
+                <td><span class="badge danger">OVERDUE</span></td>
+                <td>2nd</td>
+                <td>A stage deadline has passed without submission. Immediate escalation required.</td>
+            </tr>
+            <tr>
+                <td><span class="badge warning">PENDING</span></td>
+                <td>3rd</td>
+                <td>Active breach — deadline still ahead, SLA clock running.</td>
+            </tr>
+            <tr>
+                <td><span class="badge warning">STAGE 1/2 DONE</span></td>
+                <td>4th / 5th</td>
+                <td>Stage submitted, next stage in progress.</td>
+            </tr>
+            <tr>
+                <td><span class="badge success">COMPLIANT</span></td>
+                <td>Last</td>
+                <td>All three Article 23 stages submitted — fully resolved.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>Load More</strong> fetches the next page of issues. <strong>Refresh (🔄)</strong> re-fetches all data
+        from Jira — use this after submitting a stage to see the updated status.</p>
+
+    <p><strong>Mark Stage Complete</strong> — advances the stage without generating a PDF. Use when a PDF has already
+        been attached separately.</p>
+
+    <!-- ─── 8. DELAYS ────────────────────────────────────────────────────────── -->
+    <div class="part-header" id="delays">8. Update Delays and How to Force Refresh</div>
+
+    <table>
+        <thead>
+            <tr><th>What changed</th><th>Delay</th><th>How to force immediately</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Config saved (keywords, projects, etc.)</td>
+                <td>Up to 60 seconds — config is cached for 60s.</td>
+                <td>Wait 60s, or edit the issue to trigger a fresh webhook which re-reads config.</td>
+            </tr>
+            <tr>
+                <td>User added to / removed from Officer Group</td>
+                <td>Up to 5 minutes — auth results cached per user.</td>
+                <td>User clicks 🔄 in the compliance panel — forces a fresh permission check.</td>
+            </tr>
+            <tr>
+                <td>Issue breach status updated in Jira</td>
+                <td>Near-instant (seconds) via webhook.</td>
+                <td>Not needed.</td>
+            </tr>
+            <tr>
+                <td>Dashboard not showing new breach</td>
+                <td>Seconds — webhook lag.</td>
+                <td>Click 🔄 in the War Room dashboard.</td>
+            </tr>
+            <tr>
+                <td>Breach notification failed (Jira was down)</td>
+                <td>Up to 1 hour — hourly retry job.</td>
+                <td>Fully automatic — no action needed.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Why Didn't My Config Change Take Effect?</h3>
+    <p>The app caches configuration for 60 seconds to avoid repeated storage reads on every webhook. After saving new
+        keywords or project scopes, existing in-flight webhook events may still use the old config for up to one minute.
+        To trigger a fresh read on a specific issue, make any small edit to it (e.g. add a comment) — this fires a new
+        webhook which will pick up the updated config.</p>
+
+    <!-- ─── 9. LABELS ─────────────────────────────────────────────────────────── -->
+    <div class="part-header" id="labels">9. Jira Labels Written by the App</div>
+
+    <p>The app uses standard Jira labels. You can use these in any JQL filter, board, or dashboard within Jira.</p>
+
+    <table>
+        <thead>
+            <tr><th>Label</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>nis2-breach</td>
+                <td>Confirmed NIS2 breach — SLA clock running.</td>
+            </tr>
+            <tr>
+                <td>nis2-notified</td>
+                <td>Breach alert comment posted to the issue.</td>
+            </tr>
+            <tr>
+                <td>nis2-review-required</td>
+                <td>Keyword match detected, awaiting officer review.</td>
+            </tr>
+            <tr>
+                <td>nis2-dismissed</td>
+                <td>Review alert dismissed as a false positive by an officer.</td>
+            </tr>
+            <tr>
+                <td>nis2-stage1-complete</td>
+                <td>24h Early Warning submitted.</td>
+            </tr>
+            <tr>
+                <td>nis2-stage2-complete</td>
+                <td>72h Full Notification submitted.</td>
+            </tr>
+            <tr>
+                <td>nis2-stage3-complete</td>
+                <td>30-day Final Report submitted.</td>
+            </tr>
+            <tr>
+                <td>nis2-compliant</td>
+                <td>All three stages complete — fully compliant.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <p style="margin-bottom: 8px;"><strong>Never manually remove</strong> <code>nis2-breach</code> or
+            <code>nis2-notified</code> from a live breach issue. The app uses these labels to guard against duplicate
+            processing. Removing them mid-breach can cause duplicate alerts or break SLA tracking.</p>
+        <p style="margin: 0;">Example JQL for your CISO board:<br>
+            <code>labels in (nis2-breach, nis2-review-required) ORDER BY created DESC</code>
+        </p>
+    </div>
+
+    <!-- ─── 10. FAQ ────────────────────────────────────────────────────────────── -->
+    <div class="part-header" id="faq">10. Common Questions</div>
+
+    <h3>An issue was flagged but it's not a real NIS2 incident. What do I do?</h3>
+    <p>Open the compliance panel on the issue and click <strong>Dismiss</strong>. This adds
+        <code>nis2-dismissed</code> and removes the <code>nis2-review-required</code> label. The issue will not be
+        flagged again unless a new update triggers the keyword check.</p>
+
+    <h3>I need to manually start a breach on an issue that wasn't auto-detected.</h3>
+    <p>Open the compliance panel on the issue and click <strong>Escalate to Breach</strong>. This works even if the
+        issue has no matching keywords or is outside the monitored scope.</p>
+
+    <h3>The timer shows the wrong start time.</h3>
+    <p>The Moment of Awareness is set when the breach is first confirmed. If the initial notification failed and the
+        hourly retry job ran instead, the timer may start from when the retry succeeded, with a warning logged. The
+        timer cannot be edited manually — it is an immutable audit record.</p>
+
+    <h3>A stage was submitted but the dashboard still shows the old status.</h3>
+    <p>Click <strong>🔄 Refresh</strong> in the War Room. Submissions update Jira labels instantly, but the dashboard
+        reads live data on refresh, not in real time.</p>
+
+    <h3>The config page says "Access denied" but I am in the Officer Group.</h3>
+    <p>After being added to the group, wait up to 5 minutes for the auth cache to expire, then try again. If it still
+        fails, verify that the group name in the Officer Group field <em>exactly</em> matches the Jira group name
+        (case-sensitive).</p>
+
+    <h3>I saved new keywords but existing issues are not being re-scanned.</h3>
+    <p>The background handler runs only on webhook events (issue created or updated). Existing issues are not
+        retroactively re-scanned. To trigger detection on a specific issue, make a small edit to it — this fires a
+        webhook and the new config will apply.</p>
+
+    <h3>Does Velozar Labs have access to our Jira data?</h3>
+    <p><strong>No.</strong> The app is built on Atlassian Forge. All processing happens natively inside your Atlassian
+        Cloud environment. Your Jira data is never transmitted to, processed by, or stored on Velozar Labs servers.</p>
+
+    <footer class="legal-footer">
+        <a href="/">Home</a>
+        <a href="/docs">Quick Start</a>
+        <a href="/user-guide">User Guide</a>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <span>&copy; 2026 Velozar Labs</span>
+    </footer>
+</body>
+
+</html>
