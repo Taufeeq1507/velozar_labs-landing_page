@@ -111,16 +111,15 @@
 
     <div class="highlight-box">
         <h3 style="margin-top: 0;">Anti-Alert Fatigue Logic</h3>
-        <p>The app categorises incidents by priority to avoid flooding your team with false alarms:</p>
+        <p>What happens on a keyword match depends on two settings — <strong>Auto-Escalate</strong> and <strong>Low Priority Failsafe</strong>:</p>
         <ul>
-            <li><span class="badge danger">Breach Detected</span> <strong>Keyword + Trigger Priority match:</strong>
-                Posts a breach alert comment, adds the <code>nis2-breach</code> and <code>nis2-notified</code> labels,
-                and starts the three-stage SLA clock.</li>
-            <li><span class="badge review">Review Required</span> <strong>Keyword match, priority NOT in trigger
-                    list:</strong> Posts a review comment tagging your Notification Target and adds
-                <code>nis2-review-required</code>. An officer must confirm or dismiss.</li>
-            <li><span class="badge warning">Failsafe</span> <strong>Keyword match, low priority, failsafe
-                    enabled:</strong> Same as Review Required — adds the label and posts a comment for triage.</li>
+            <li><span class="badge danger">Breach Detected</span> <strong>Keyword + Trigger Priority match, Auto-Escalate ON:</strong>
+                Immediately confirmed — adds <code>nis2-breach</code> and <code>nis2-notified</code> labels and starts the three-stage SLA clock automatically.</li>
+            <li><span class="badge review">Review Required</span> <strong>Keyword + Trigger Priority match, Auto-Escalate OFF (default):</strong>
+                Posts a review comment and adds <code>nis2-review-required</code>. An officer must click <strong>Escalate to Breach</strong> to confirm — the SLA clock starts only at that point.</li>
+            <li><span class="badge review">Review Required</span> <strong>Keyword match, priority NOT in Trigger Priority list, Low Priority Failsafe ON (default):</strong>
+                Same outcome — posts a review comment tagging your Notification Target and adds <code>nis2-review-required</code>. Acts as a safety net for genuine incidents initially logged with the wrong priority.</li>
+            <li><strong>No action</strong> — keyword match, priority not in trigger list, Failsafe OFF: the issue is silently ignored.</li>
         </ul>
     </div>
 
