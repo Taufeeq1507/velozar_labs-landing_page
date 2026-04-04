@@ -267,9 +267,11 @@
             <tr>
                 <td>Low Priority Failsafe</td>
                 <td><strong>On (default):</strong> If an issue has a matching keyword but its priority is not in the
-                    Trigger Priorities list, the app still posts a review comment and adds
-                    <code>nis2-review-required</code> as a safety net. Catches genuine incidents that were initially
-                    logged with the wrong priority. Turn off if you receive too many false-positive review alerts.</td>
+                    Trigger Priorities list, the app silently adds <code>nis2-review-required</code> — no Jira comment,
+                    no @mention. The issue surfaces in the War Room dashboard for passive officer review. This avoids
+                    activity feed noise while still catching genuine incidents that were initially logged with the wrong
+                    priority. Turn off if you want keyword matches below the trigger threshold to be completely
+                    ignored.</td>
             </tr>
             <tr>
                 <td>Notification Target</td>
@@ -304,8 +306,8 @@
             user-written text is scanned — ADF structural keys are excluded to prevent false matches.</li>
         <li><strong>Priority check:</strong> A keyword match triggers breach-level action only if the priority is in
             your Trigger Priorities list.</li>
-        <li><strong>Action:</strong> Depending on the Auto-Escalate setting and Low Priority Failsafe, the app posts a
-            breach alert, a review comment, or nothing.</li>
+        <li><strong>Action:</strong> Depending on the Auto-Escalate setting and Low Priority Failsafe, the app either
+            posts a breach alert, posts a review comment with @mention, silently labels the issue for War Room review, or does nothing.</li>
     </ol>
 
     <h2>Hourly Retry Job</h2>
