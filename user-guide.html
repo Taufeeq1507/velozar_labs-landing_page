@@ -175,8 +175,9 @@
 
     <h3>Auth Cache</h3>
     <p>Permission results are cached per user for <strong>5 minutes</strong>. If you add someone to the Officer Group,
-        they may need to wait up to 5 minutes before the app recognises the change. Clicking the <strong>🔄 refresh
-            button</strong> inside the compliance panel bypasses the cache immediately.</p>
+        they may need to wait up to 5 minutes before the app recognises the change. The affected user can click
+        <strong>🔄 Refresh Permissions</strong> inside the compliance panel to force an immediate permission re-check,
+        bypassing the cache.</p>
 
     <!-- ─── 3. CONFIGURATION ─────────────────────────────────────────────────── -->
     <div class="part-header" id="configuration">3. Global Configuration — Every Field Explained</div>
@@ -439,8 +440,8 @@
     <p><strong>Load More</strong> fetches the next page of issues. <strong>Refresh (🔄)</strong> re-fetches all data
         from Jira — use this after submitting a stage to see the updated status.</p>
 
-    <p><strong>Mark Stage Complete</strong> — advances the stage without generating a PDF. Use when a PDF has already
-        been attached separately.</p>
+    <p><strong>Mark Stage N Done</strong> — advances the stage without generating a PDF from the browser. Use when a PDF has already
+        been attached to the Jira issue separately.</p>
 
     <!-- ─── 8. DELAYS ────────────────────────────────────────────────────────── -->
     <div class="part-header" id="delays">8. Update Delays and How to Force Refresh</div>
@@ -542,7 +543,7 @@
     <div class="part-header" id="faq">10. Common Questions</div>
 
     <h3>An issue was flagged but it's not a real NIS2 incident. What do I do?</h3>
-    <p>Open the compliance panel on the issue and click <strong>Dismiss</strong>. This adds
+    <p>Open the compliance panel on the issue and click <strong>Dismiss False Alarm</strong>. This adds
         <code>nis2-dismissed</code> and removes the <code>nis2-review-required</code> label. The issue will not be
         flagged again unless a new update triggers the keyword check.</p>
 
