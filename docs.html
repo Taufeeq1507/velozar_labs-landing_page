@@ -66,7 +66,7 @@
     <p>Before the app can detect incidents, a Jira Administrator must configure it.</p>
     <ol>
         <li>In Jira, go to <strong>Settings &rarr; Apps &rarr; NIS2 Compliance Center</strong>.</li>
-        <li>The configuration panel opens directly — fill in the fields and click <strong>Save Configuration</strong>.
+        <li>Click the <strong>Configuration</strong> tab — fill in the fields and click <strong>Save Configuration</strong>.
         </li>
     </ol>
     <p>You must be a <strong>Global Jira Administrator</strong> to access this page. Alternatively, once configured, any
@@ -116,7 +116,7 @@
             <li><span class="badge danger">Breach Detected</span> <strong>Keyword + Trigger Priority match, Auto-Escalate ON:</strong>
                 Immediately confirmed — adds <code>nis2-breach</code> and <code>nis2-notified</code> labels and starts the three-stage SLA clock automatically.</li>
             <li><span class="badge review">Review Required</span> <strong>Keyword + Trigger Priority match, Auto-Escalate OFF (default):</strong>
-                Posts a review comment and adds <code>nis2-review-required</code>. An officer must click <strong>Escalate to Breach</strong> to confirm — the SLA clock starts only at that point.</li>
+                Posts a review comment and adds <code>nis2-review-required</code>. An officer must click <strong>🚨 Confirm Security Breach</strong> to confirm — the SLA clock starts only at that point.</li>
             <li><span class="badge review">Review Required</span> <strong>Keyword match, priority NOT in Trigger Priority list, Low Priority Failsafe ON (default):</strong>
                 Same outcome — posts a review comment tagging your Notification Target and adds <code>nis2-review-required</code>. Acts as a safety net for genuine incidents initially logged with the wrong priority.</li>
             <li><strong>No action</strong> — keyword match, priority not in trigger list, Failsafe OFF: the issue is silently ignored.</li>
@@ -131,16 +131,16 @@
 
     <h3>When status is REVIEW REQUIRED</h3>
     <ol>
-        <li>Click <strong>Escalate to Breach</strong> to confirm the incident and start the SLA clock, or</li>
-        <li>Click <strong>Dismiss</strong> to mark it as a false positive (<code>nis2-dismissed</code>).</li>
+        <li>Click <strong>🚨 Confirm Security Breach</strong> to confirm the incident and start the SLA clock, or</li>
+        <li>Click <strong>Dismiss False Alarm</strong> to mark it as a false positive (<code>nis2-dismissed</code>).</li>
     </ol>
 
     <h3>When status is BREACH DETECTED</h3>
     <ol>
         <li>Fill in the incident report form (jurisdiction, impact details, incident type, detection date).</li>
-        <li>Click <strong>Save Draft</strong> to save progress — the draft reloads automatically next time you open the
+        <li>Click <strong>Save &amp; Preview Draft</strong> to save progress and review the report payload — the draft reloads automatically next time you open the
             panel.</li>
-        <li>Click <strong>Submit &amp; Attach to Jira</strong> — this generates the official PDF, attaches it to the
+        <li>Click <strong>📎 Submit &amp; Advance Stage</strong> — this generates the official PDF, attaches it to the
             issue, advances the compliance stage, and posts an immutable audit comment recording who submitted and
             when.</li>
         <li>Repeat for Stage 2 (72h) and Stage 3 (30 days) as each deadline approaches.</li>
@@ -191,6 +191,7 @@
         <a href="/privacy">Privacy</a>
         <span>&copy; 2026 Velozar Labs</span>
     </footer>
+
 </body>
 
 </html>

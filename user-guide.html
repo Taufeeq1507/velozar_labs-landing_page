@@ -162,10 +162,15 @@
     </table>
 
     <div class="highlight-box">
-        <p style="margin: 0;"><strong>Note on stage completion:</strong> Stage submissions have a second permission
+        <p style="margin: 0 0 10px 0;"><strong>Note on stage completion:</strong> Stage submissions have a second permission
             check on top of officer status — the officer must also have <strong>Edit Issue</strong> permission on that
             specific Jira issue. This prevents an officer from advancing stages on issues in restricted projects they
             have no legitimate access to.</p>
+        <p style="margin: 0;"><strong>Note on War Room visibility:</strong> The War Room dashboard is accessible to
+            <strong>all licensed Jira users</strong>, not just Officers or Admins. Any user who can access the
+            <strong>Settings &rarr; Apps &rarr; NIS2 Compliance Center</strong> page can view active breach data,
+            issue keys, and deadline status. Ensure your Jira site permissions align with your organisation's
+            data classification requirements.</p>
     </div>
 
     <h3>Auth Cache</h3>
@@ -291,8 +296,9 @@
         <li><strong>Auto-complete check:</strong> If the issue is closed (<code>statusCategory = done</code>) and all
             three NIS2 stages are complete, the app stamps <code>nis2-compliant</code> automatically.</li>
         <li><strong>Scope gate:</strong> The issue must match your configured Monitored Projects and Monitored Issue
-            Types. Already-confirmed breaches bypass the scope gate — removing an issue from monitored scope does not
-            remove the legal obligation.</li>
+            Types. Issues already confirmed as breaches (via the sidebar) are managed through the compliance panel and
+            are not re-processed by the background handler — removing an issue from monitored scope does not remove
+            the legal obligation.</li>
         <li><strong>Keyword scan:</strong> The summary and description are scanned for configured keywords. Only
             user-written text is scanned — ADF structural keys are excluded to prevent false matches.</li>
         <li><strong>Priority check:</strong> A keyword match triggers breach-level action only if the priority is in
@@ -342,8 +348,8 @@
     <h2>REVIEW REQUIRED State</h2>
     <p>Two buttons appear:</p>
     <ul>
-        <li><strong>Escalate to Breach</strong> — Confirms the incident and starts the SLA clock from this moment.</li>
-        <li><strong>Dismiss</strong> — Marks the issue as <code>nis2-dismissed</code> and removes the review alert.
+        <li><strong>🚨 Confirm Security Breach</strong> — Confirms the incident and starts the SLA clock from this moment.</li>
+        <li><strong>Dismiss False Alarm</strong> — Marks the issue as <code>nis2-dismissed</code> and removes the review alert.
             Use for false positives.</li>
     </ul>
 
@@ -351,11 +357,11 @@
     <p>A live countdown timer shows how long remains until the current stage deadline. The panel enters form mode.</p>
 
     <h3>Draft Saving</h3>
-    <p>Click <strong>Save Draft</strong> to save progress. Drafts are per-issue per-stage. If you are on Stage 2 and
+    <p>Click <strong>Save &amp; Preview Draft</strong> to save progress and review the report payload. Drafts are per-issue per-stage. If you are on Stage 2 and
         have no Stage 2 draft, the Stage 1 draft cascades in as a starting point so you don't retype shared fields.</p>
 
     <h3>Submitting a Stage</h3>
-    <p>Click <strong>Submit &amp; Attach to Jira</strong>. This:</p>
+    <p>Click <strong>📎 Submit &amp; Advance Stage</strong>. This:</p>
     <ol>
         <li>Generates the PDF directly in the browser (no server upload).</li>
         <li>Attaches it to the Jira issue directly — browser to Jira, bypassing Forge payload limits.</li>
@@ -363,7 +369,7 @@
         <li>Posts an immutable audit comment recording the submitting user and timestamp.</li>
         <li>On Stage 3: also stamps <code>nis2-compliant</code> and the issue is fully resolved.</li>
     </ol>
-    <p>You can also <strong>Download PDF</strong> without submitting — useful for previewing before filing.</p>
+    <p>You can also click <strong>⬇️ Download PDF Only</strong> without submitting — useful for previewing before filing.</p>
 
     <!-- ─── 6. THREE STAGES ──────────────────────────────────────────────────── -->
     <div class="part-header" id="stages">6. The Three-Stage Article 23 Workflow</div>
@@ -387,7 +393,7 @@
 
     <h2>The Moment of Awareness Timer</h2>
     <p>The SLA clock starts from when the breach is first confirmed — either by the background handler on detection, or
-        by an officer clicking Escalate to Breach. The original timestamp is stored and never overwritten. If the app
+        by an officer clicking 🚨 Confirm Security Breach. The original timestamp is stored and never overwritten. If the app
         retries a failed notification, the original detection time is preserved as the Moment of Awareness wherever
         possible.</p>
 
@@ -541,7 +547,7 @@
         flagged again unless a new update triggers the keyword check.</p>
 
     <h3>I need to manually start a breach on an issue that wasn't auto-detected.</h3>
-    <p>Open the compliance panel on the issue and click <strong>Escalate to Breach</strong>. This works even if the
+    <p>Open the compliance panel on the issue and click <strong>🚨 Confirm Security Breach</strong>. This works even if the
         issue has no matching keywords or is outside the monitored scope.</p>
 
     <h3>The timer shows the wrong start time.</h3>
@@ -569,7 +575,7 @@
 
     <footer class="legal-footer">
         <a href="/">Home</a>
-        <a href="/docs">Quick Start</a>
+        <a href="/docs">Docs</a>
         <a href="/user-guide">User Guide</a>
         <a href="/terms">Terms</a>
         <a href="/privacy">Privacy</a>

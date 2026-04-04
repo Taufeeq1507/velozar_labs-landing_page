@@ -20,18 +20,13 @@ document.addEventListener('mousemove', (event) => {
 });
 
 let isVisible = true;
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        isVisible = entry.isIntersecting;
-        if (isVisible) animate();
-    });
-});
-
-const sceneContainer = document.querySelector('.scene-container');
-if (sceneContainer) observer.observe(sceneContainer);
+let animationRunning = false;
 
 const animate = () => {
-    if (!isVisible) return;
+    if (!isVisible) {
+        animationRunning = false;
+        return;
+    }
 
     if (cube) {
         currentSpeed += (baseSpeed - currentSpeed) * friction;
@@ -43,6 +38,21 @@ const animate = () => {
 
     requestAnimationFrame(animate);
 };
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !animationRunning) {
+            animationRunning = true;
+            animate();
+        }
+    });
+});
+
+const sceneContainer = document.querySelector('.scene-container');
+if (sceneContainer) observer.observe(sceneContainer);
+
+animationRunning = true;
 animate();
 
 window.addEventListener('resize', () => {
