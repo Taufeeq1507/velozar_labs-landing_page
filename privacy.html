@@ -80,8 +80,22 @@
             the EU (e.g., Frankfurt), our application data remains in that region.</p>
 
         <p><strong>3. Configuration Storage</strong><br>
-            App settings (keywords, officer group, monitored projects, jurisdiction preferences) are stored using the
-            encrypted Atlassian Forge Storage API. No configuration data is stored on Velozar Labs servers.</p>
+            App settings are stored using the encrypted Atlassian Forge Storage API. No data is stored on Velozar Labs
+            servers. The following data categories are stored within your Atlassian Cloud instance:</p>
+        <ul>
+            <li><strong>App configuration</strong> — entity name, sector, jurisdiction, contact name and email, officer
+                group name, monitored project keys, monitored issue types, trigger keywords, priority thresholds, and
+                notification settings</li>
+            <li><strong>SLA timer timestamps</strong> — the Unix timestamp of the confirmed Moment of Awareness for each
+                breach issue, keyed by Jira issue key</li>
+            <li><strong>Draft report form data</strong> — per-stage Article 23 report fields saved by NIS2 Officers
+                before final submission, including incident type, detection date, affected services, mitigation steps,
+                and lessons learned</li>
+            <li><strong>Per-issue deduplication keys</strong> — the last-processed webhook timestamp per issue, used to
+                prevent duplicate breach notifications</li>
+        </ul>
+        <p>All of the above is stored exclusively within your Atlassian Cloud instance and is never transmitted to
+            Velozar Labs or any third party.</p>
 
         <p><strong>4. Payment Processing</strong><br>
             Subscription billing for paid plans is handled exclusively by <strong>Atlassian Marketplace</strong>.
