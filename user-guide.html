@@ -366,7 +366,7 @@
     <h3>Submitting a Stage</h3>
     <p>Click <strong>📎 Submit &amp; Advance Stage</strong>. This:</p>
     <ol>
-        <li>Generates the PDF directly in the browser (no server upload).</li>
+        <li>Generates the PDF directly in your browser using only data from your Jira instance. The file is attached browser-to-Jira — it never passes through or touches Velozar Labs infrastructure.</li>
         <li>Attaches it to the Jira issue directly — browser to Jira, bypassing Forge payload limits.</li>
         <li>Advances the compliance stage by adding <code>nis2-stage{N}-complete</code>.</li>
         <li>Posts an immutable audit comment recording the submitting user and timestamp.</li>
@@ -376,6 +376,12 @@
 
     <!-- ─── 6. THREE STAGES ──────────────────────────────────────────────────── -->
     <div class="part-header" id="stages">6. The Three-Stage Article 23 Workflow</div>
+
+    <p><strong>About the internal audit records:</strong> Each stage submission generates a timestamped PDF attached to
+        the Jira issue. These documents serve as your organisation's internal evidence that the Article 23 process was
+        followed correctly. They are not submitted directly to your national competent authority — NCA submissions are
+        made through each member state's own reporting portal. Your compliance officer should consult your NCA's
+        guidance for the specific portal and format they require.</p>
 
     <h2>Stage 1 — Early Warning (24 hours)</h2>
     <p>Mandatory fields: jurisdiction, organisation name, suspected malicious action, potential cross-border impact,
